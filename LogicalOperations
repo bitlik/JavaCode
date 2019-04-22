@@ -1,0 +1,162 @@
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.TreeSet;
+
+class SetOperationProblem {
+
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+        int test = Integer.parseInt(sc.nextLine());
+        for (int i = 0; i<test; i++) {
+            String temp = sc.nextLine();
+            int m = Integer.parseInt(temp.split(" ")[0]);
+            int n = Integer.parseInt(temp.split(" ")[1]);
+            HashSet<Integer> arr = new HashSet<Integer>(m);
+            HashSet<Integer> brr = new HashSet<Integer>(n);
+            String arrtemp = sc.nextLine();
+            for (String at : arrtemp.split(" ")) {
+                arr.add(Integer.parseInt(at));
+            }
+            String brrtemp = sc.nextLine();
+            for (String at : brrtemp.split(" ")) {
+                brr.add(Integer.parseInt(at));
+            }
+            int ch = Integer.parseInt(sc.nextLine());
+            switch (ch) {
+                case 1: option1(arr, brr); break;
+                case 2: option2(arr, brr); break;
+                case 3: option3(arr, brr); break;
+                case 4: option4(arr, brr); break;
+                case 5: option5(arr, brr); break;
+                default: System.out.println("Wrong choice");
+            }
+
+        }
+    }
+
+    private static void option1 (HashSet<Integer> arr, HashSet<Integer> brr ) {
+        HashSet<Integer> common = new HashSet<>();
+        TreeSet<Integer> sortedSet = new TreeSet<Integer>();
+        for (Integer a : arr) {
+            common.add(a);
+        }
+        for (Integer a : brr) {
+            if(common.add(a) == false) {
+                sortedSet.add(a);
+            }
+        }
+        String print = "{";
+        for (Integer a : sortedSet) {
+            print = print + a + ", ";
+        }
+		if(print.length()> 2){
+			print = print.substring(0, print.length()-2);
+		}
+        print = print + "}";
+        System.out.println(print);
+
+    }
+
+    private static void option2 (HashSet<Integer> arr, HashSet<Integer> brr ) {
+        HashSet<Integer> common = new HashSet<>();
+        TreeSet<Integer> sortedSetOr = new TreeSet<Integer>();
+        for (Integer a : arr) {
+            sortedSetOr.add(a);
+        }
+        for (Integer a : brr) {
+            sortedSetOr.add(a);
+		}
+        String print = "{";
+        for (Integer a : sortedSetOr) {
+            print = print + a + ", ";
+        }
+		if(print.length() > 2){
+			print = print.substring(0, print.length()-2);
+		}       
+		print = print + "}";
+        System.out.println(print);
+
+    }
+
+    private static void option3 (HashSet<Integer> arr, HashSet<Integer> brr ) {
+        HashSet<Integer> common = new HashSet<>();
+		HashSet<Integer> common2 = new HashSet<>();
+        TreeSet<Integer> sortedSetOr = new TreeSet<Integer>();
+        TreeSet<Integer> sortedSetAnd = new TreeSet<Integer>();
+
+        for (Integer a : arr) {
+            common.add(a);
+        }
+        for (Integer a : brr) {
+            common.add(a);
+		}
+		for (Integer a : common) {
+            sortedSetOr.add(a);
+        }
+		for (Integer a : arr) {
+            common2.add(a);
+        }
+        for (Integer a : brr) {
+            if(common2.add(a) == false) {
+                sortedSetAnd.add(a);
+            }
+        }
+		for(Integer a : sortedSetAnd){
+			sortedSetOr.remove(a);
+			}
+		
+		
+		String print = "{";
+        for (Integer a : sortedSetOr) {
+            print = print + a + ", ";
+        }
+        if(print.length()> 2){
+			print = print.substring(0, print.length()-2);
+		}
+        print = print + "}";
+        System.out.println(print);
+    }
+    
+
+    private static void option4 (HashSet<Integer> arr, HashSet<Integer> brr ) {
+        HashSet<Integer> common = new HashSet<>();
+        TreeSet<Integer> sortedSetA = new TreeSet<Integer>();
+		for(Integer a : arr){
+			sortedSetA.add(a);
+		}
+		for(Integer a : brr){
+			sortedSetA.remove(a);
+		}
+		String print = "{";
+        for (Integer a : sortedSetA){
+            print = print + a + ", ";
+        }
+		if(print.length()> 2){
+			print = print.substring(0, print.length()-2);
+		}
+        print = print + "}";
+        System.out.println(print);
+   
+	}
+
+    private static void option5 (HashSet<Integer> arr, HashSet<Integer> brr) {
+        HashSet<Integer> common = new HashSet<>();
+        TreeSet<Integer> sortedSetB = new TreeSet<Integer>();
+		for(Integer a : brr){
+			sortedSetB.add(a);
+		}
+		for(Integer a : arr){
+			sortedSetB.remove(a);
+		}
+		String print = "{";
+        for (Integer a : sortedSetB){
+            print = print + a + ", ";
+        }
+        if(print.length()> 2){
+			print = print.substring(0, print.length()-2);
+		}
+        print = print + "}";
+        System.out.println(print);
+    }
+}
